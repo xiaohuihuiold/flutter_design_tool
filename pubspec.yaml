@@ -1,0 +1,36 @@
+name: flutter_design_tool
+description: 基于flutter的跨平台ui设计工具
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  cupertino_icons: ^0.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/
+
+  fonts:
+    - family: Alibaba-PuHuiTi
+      fonts:
+        - asset: assets/fonts/puhuiti/Alibaba-PuHuiTi-Regular.otf
+        - asset: assets/fonts/puhuiti/Alibaba-PuHuiTi-Light.otf
+          weight: 300
+        - asset: assets/fonts/puhuiti/Alibaba-PuHuiTi-Medium.otf
+          weight: 500
+        - asset: assets/fonts/puhuiti/Alibaba-PuHuiTi-Heavy.otf
+          weight: 700
