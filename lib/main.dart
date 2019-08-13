@@ -4,6 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'common/bloc/screen_bloc.dart';
+import 'common/entity/window_info.dart';
+import 'common/widget/editor_scaffold.dart';
 import 'generated/i18n.dart';
 
 void main() {
@@ -31,6 +34,9 @@ class MyApp extends StatelessWidget {
       title: 'FDT',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        primaryColor: Colors.white,
+        backgroundColor: Colors.white,
+        canvasColor: Colors.white,
         fontFamily: 'Alibaba-PuHuiTi',
       ),
       // 国际化
@@ -41,7 +47,18 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate
       ],
       supportedLocales: S.delegate.supportedLocales,
-      home: HomePage(),
+      home: LayoutBuilder(
+        builder: (buildContext, constraints) {
+          // 根据最大宽高创建窗口信息
+          Size size = Size(constraints.maxWidth, constraints.maxHeight);
+          WindowInfo info = WindowInfo.fromSize(size);
+          if (info != windowBloc.value) {
+            // 如果窗口信息改变了就更新数据
+            windowBloc.update(info);
+          }
+          return HomePage();
+        },
+      ),
     );
   }
 }
@@ -54,9 +71,25 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(S.of(context).appName),
+    return EditorScaffold(
+      tools: <Widget>[
+        Icon(Icons.create),
+        Icon(Icons.timeline),
+        Icon(Icons.text_fields),
+        Icon(Icons.brush),
+        Icon(Icons.delete),
+        Icon(Icons.insert_photo),
+        Icon(Icons.insert_link),
+      ],
+      body: Center(
+        child: StreamBuilder<WindowInfo>(
+          stream: windowBloc.stream,
+          initialData: windowBloc.value,
+          builder: (context, snapshot) {
+            return Text(
+                '${snapshot.data.windowDirection == Axis.vertical ? '竖屏' : '横屏'}');
+          },
+        ),
       ),
     );
   }
