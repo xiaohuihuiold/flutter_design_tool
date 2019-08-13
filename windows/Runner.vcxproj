@@ -51,7 +51,7 @@
     <IntDir>$(ProjectDir)..\build\windows\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
     <IncludePath>$(ProjectDir)flutter\;$(ProjectDir)flutter\cpp_client_wrapper\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)flutter;$(LibraryPath)</LibraryPath>
-    <TargetName>Flutter Desktop Example</TargetName>
+    <TargetName>Flutter Design Tool</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(ProjectDir)..\build\windows\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
