@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_design_tool/common/bloc/screen_bloc.dart';
 import 'package:flutter_design_tool/common/entity/window_info.dart';
+import 'package:rxdart/rxdart.dart';
 
 /// 编辑器工具栏
 class EditorToolbar extends StatefulWidget {
@@ -21,8 +22,9 @@ class EditorToolbar extends StatefulWidget {
 }
 
 class _EditorToolbarState extends State<EditorToolbar> {
-  /// hover的item下标
-  int _hoverIndex = -1;
+  /// 鼠标悬浮
+  PublishSubject<int> _hoverFetcher = PublishSubject<int>();
+  PublishSubject<int> _hoverFixedFetcher = PublishSubject<int>();
 
   /// 选中的item下标
   int _activeIndex = -1;
@@ -36,36 +38,42 @@ class _EditorToolbarState extends State<EditorToolbar> {
         preferBelow: false,
         child: AspectRatio(
           aspectRatio: 1.0,
-          child: Listener(
-            behavior: HitTestBehavior.opaque,
-            onPointerHover: (_) {
-              setState(() {
-                _hoverIndex = index;
-              });
+          child: MouseRegion(
+            onHover: (_) {
+              _hoverFetcher?.sink?.add(index);
             },
-            onPointerCancel: (_) {
-              setState(() {
-                _hoverIndex = -1;
-              });
+            onExit: (_) {
+              _hoverFetcher?.sink?.add(-1);
             },
-            onPointerDown: (_) {
-              setState(() {
-                _activeIndex = index;
-              });
-            },
-            child: IconTheme.merge(
-              data: IconThemeData(color: () {
-                if (_activeIndex == index) {
-                  return Colors.blue;
-                } else {
-                  if (_hoverIndex == index) {
-                    return Colors.grey.shade900;
-                  } else {
-                    return Colors.grey.shade600;
-                  }
+            child: InkWell(
+              borderRadius: BorderRadius.circular(kToolbarHeight / 1.2),
+              onTap: () {
+                setState(() {
+                  _activeIndex = index;
+                });
+                if (item.onPressed != null) {
+                  item.onPressed();
                 }
-              }()),
-              child: item.icon,
+              },
+              child: StreamBuilder<int>(
+                stream: _hoverFetcher?.stream,
+                builder: (context, snapshot) {
+                  return IconTheme.merge(
+                    data: IconThemeData(color: () {
+                      if (_activeIndex == index) {
+                        return Colors.blue;
+                      } else {
+                        if (snapshot.data == index) {
+                          return Colors.grey.shade900;
+                        } else {
+                          return Colors.grey.shade600;
+                        }
+                      }
+                    }()),
+                    child: item.icon,
+                  );
+                },
+              ),
             ),
           ),
         ),
@@ -82,13 +90,49 @@ class _EditorToolbarState extends State<EditorToolbar> {
         preferBelow: false,
         child: AspectRatio(
           aspectRatio: 1.0,
-          child: IconTheme.merge(
-            data: IconThemeData(color: Colors.grey.shade900),
-            child: item.icon,
+          child: MouseRegion(
+            onHover: (_) {
+              _hoverFixedFetcher?.sink?.add(index);
+            },
+            onExit: (_) {
+              _hoverFixedFetcher?.sink?.add(-1);
+            },
+            child: InkWell(
+              borderRadius: BorderRadius.circular(kToolbarHeight / 1.2),
+              onTap: () {
+                if (item.onPressed != null) {
+                  item.onPressed();
+                }
+              },
+              child: StreamBuilder<int>(
+                stream: _hoverFixedFetcher.stream,
+                builder: (context, snapshot) {
+                  return IconTheme.merge(
+                    data: IconThemeData(color: () {
+                      if (snapshot.data == index) {
+                        return Colors.grey.shade900;
+                      } else {
+                        return Colors.grey.shade600;
+                      }
+                    }()),
+                    child: item.icon,
+                  );
+                },
+              ),
+            ),
           ),
         ),
       );
     });
+  }
+
+  @override
+  void dispose() {
+    _hoverFetcher?.close();
+    _hoverFetcher = null;
+    _hoverFixedFetcher?.close();
+    _hoverFixedFetcher = null;
+    super.dispose();
   }
 
   @override
