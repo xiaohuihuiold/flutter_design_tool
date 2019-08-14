@@ -55,24 +55,28 @@ class _EditorToolbarState extends State<EditorToolbar> {
                   item.onPressed();
                 }
               },
-              child: StreamBuilder<int>(
-                stream: _hoverFetcher?.stream,
-                builder: (context, snapshot) {
-                  return IconTheme.merge(
-                    data: IconThemeData(color: () {
-                      if (_activeIndex == index) {
-                        return Colors.blue;
-                      } else {
-                        if (snapshot.data == index) {
-                          return Colors.grey.shade900;
+              child: AnimatedSwitcher(
+                reverseDuration: Duration(milliseconds: 1000),
+                duration: Duration(milliseconds: 1000),
+                child: StreamBuilder<int>(
+                  stream: _hoverFetcher?.stream,
+                  builder: (context, snapshot) {
+                    return IconTheme.merge(
+                      data: IconThemeData(color: () {
+                        if (_activeIndex == index) {
+                          return Colors.blue;
                         } else {
-                          return Colors.grey.shade600;
+                          if (snapshot.data == index) {
+                            return Colors.grey.shade900;
+                          } else {
+                            return Colors.grey.shade600;
+                          }
                         }
-                      }
-                    }()),
-                    child: item.icon,
-                  );
-                },
+                      }()),
+                      child: item.icon,
+                    );
+                  },
+                ),
               ),
             ),
           ),
