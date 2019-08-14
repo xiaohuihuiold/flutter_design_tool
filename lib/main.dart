@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'common/bloc/screen_bloc.dart';
 import 'common/entity/window_info.dart';
+import 'common/style/themes.dart';
 import 'common/widget/editor_scaffold.dart';
 import 'common/widget/editor_toolbar.dart';
 import 'generated/i18n.dart';
@@ -33,13 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FDT',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        primaryColor: Colors.white,
-        backgroundColor: Colors.white,
-        canvasColor: Colors.white,
-        fontFamily: 'Alibaba-PuHuiTi',
-      ),
+      theme: Themes.lightTheme,
       // 国际化
       // S.of(context).xxx进行使用
       localizationsDelegates: const [

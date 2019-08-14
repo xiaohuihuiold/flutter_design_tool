@@ -124,7 +124,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
           divider = Container(
             height: 4.0,
             width: kToolbarHeight / 1.2 / 1.5,
-            child: Divider(),
+            child: Divider(color: Theme.of(context).dividerColor),
           );
           size = Size(kToolbarHeight / 1.2, null);
           toolBar = Column(
@@ -145,7 +145,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
           divider = Container(
             width: 4.0,
             height: kToolbarHeight / 1.2 / 1.5,
-            child: VerticalDivider(),
+            child: VerticalDivider(color: Theme.of(context).dividerColor),
           );
           size = Size(null, kToolbarHeight / 1.2);
           toolBar = Row(
@@ -161,7 +161,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
           height: size.height,
           width: size.width,
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.8),
+            color: Theme.of(context).canvasColor.withOpacity(0.8),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.6),
