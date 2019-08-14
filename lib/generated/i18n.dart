@@ -22,6 +22,7 @@ class S implements WidgetsLocalizations {
   TextDirection get textDirection => TextDirection.ltr;
 
   String get appName => "FDT";
+  String get what_is_this => "What is this?";
 }
 
 class $en extends S {
@@ -36,6 +37,8 @@ class $zh_CN extends S {
 
   @override
   String get appName => "FDT";
+  @override
+  String get what_is_this => "这是啥?";
 }
 
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {

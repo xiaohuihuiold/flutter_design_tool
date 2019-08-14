@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'common/bloc/screen_bloc.dart';
 import 'common/entity/window_info.dart';
 import 'common/widget/editor_scaffold.dart';
+import 'common/widget/editor_toolbar.dart';
 import 'generated/i18n.dart';
 
 void main() {
@@ -72,24 +73,49 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return EditorScaffold(
-      tools: <Widget>[
-        Icon(Icons.create),
-        Icon(Icons.timeline),
-        Icon(Icons.text_fields),
-        Icon(Icons.brush),
-        Icon(Icons.delete),
-        Icon(Icons.insert_photo),
-        Icon(Icons.insert_link),
-      ],
-      body: Center(
-        child: StreamBuilder<WindowInfo>(
-          stream: windowBloc.stream,
-          initialData: windowBloc.value,
-          builder: (context, snapshot) {
-            return Text(
-                '${snapshot.data.windowDirection == Axis.vertical ? '竖屏' : '横屏'}');
-          },
-        ),
+      toolbar: EditorToolbar(
+        tools: <EditorToolItem>[
+          EditorToolItem(
+            tooltip: '添加',
+            icon: Icon(Icons.add),
+          ),
+          EditorToolItem(
+            tooltip: '删除',
+            icon: Icon(Icons.delete),
+          ),
+          EditorToolItem(
+            tooltip: '查找',
+            icon: Icon(Icons.search),
+          ),
+          EditorToolItem(
+            tooltip: '更新',
+            icon: Icon(Icons.update),
+          ),
+          EditorToolItem(
+            tooltip: '编辑',
+            icon: Icon(Icons.edit),
+          ),
+        ],
+        toolsFixed: <EditorToolItem>[
+          EditorToolItem(
+            tooltip: '图层',
+            icon: Icon(Icons.filter),
+          ),
+          EditorToolItem(
+            tooltip: '更多',
+            icon: Icon(Icons.more_vert),
+          ),
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: 200,
+        itemBuilder: (_, __) {
+          return ListTile(
+            title: Text('Title'),
+            subtitle: Text('subtitle'),
+            trailing: Icon(Icons.more_vert),
+          );
+        },
       ),
     );
   }
