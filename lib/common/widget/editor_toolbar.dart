@@ -153,10 +153,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
         EdgeInsetsGeometry padding;
         // 工具栏滑动方向
         Axis scrollDirection;
-        // 工具栏
-        Widget toolBar;
-        // 固定工具栏
-        Widget toolBarFixed;
         // 分割线
         Widget divider;
         // 工具栏宽高
@@ -172,17 +168,11 @@ class _EditorToolbarState extends State<EditorToolbar> {
           divider = Container(
             height: 4.0,
             width: kToolbarHeight / 1.2 / 1.5,
-            child: Divider(color: Theme.of(context).dividerColor),
+            child: Divider(color: Theme
+                .of(context)
+                .dividerColor),
           );
           size = Size(kToolbarHeight / 1.2, null);
-          toolBar = Column(
-            mainAxisSize: MainAxisSize.min,
-            children: _generateToolList(),
-          );
-          toolBarFixed = Column(
-            mainAxisSize: MainAxisSize.min,
-            children: _generateToolFixedList()..insert(0, divider),
-          );
         } else {
           // 当显示是纵向时
           alignmentFixed = AlignmentDirectional.centerEnd;
@@ -193,23 +183,20 @@ class _EditorToolbarState extends State<EditorToolbar> {
           divider = Container(
             width: 4.0,
             height: kToolbarHeight / 1.2 / 1.5,
-            child: VerticalDivider(color: Theme.of(context).dividerColor),
+            child: VerticalDivider(color: Theme
+                .of(context)
+                .dividerColor),
           );
           size = Size(null, kToolbarHeight / 1.2);
-          toolBar = Row(
-            mainAxisSize: MainAxisSize.min,
-            children: _generateToolList(),
-          );
-          toolBarFixed = Row(
-            mainAxisSize: MainAxisSize.min,
-            children: _generateToolFixedList()..insert(0, divider),
-          );
         }
         return Container(
           height: size.height,
           width: size.width,
           decoration: BoxDecoration(
-            color: Theme.of(context).canvasColor.withOpacity(0.8),
+            color: Theme
+                .of(context)
+                .canvasColor
+                .withOpacity(0.8),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.6),
@@ -225,12 +212,21 @@ class _EditorToolbarState extends State<EditorToolbar> {
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   scrollDirection: scrollDirection,
-                  child: toolBar,
+                  child: Flex(
+                    direction: scrollDirection,
+                    mainAxisSize: MainAxisSize.min,
+                    children: _generateToolList(),
+                  ),
                 ),
               ),
               Visibility(
                 visible: widget.toolsFixed != null,
-                child: toolBarFixed,
+                child: Flex(
+                  direction: scrollDirection,
+                  mainAxisSize: MainAxisSize.min,
+                  children: _generateToolFixedList()
+                    ..insert(0, divider),
+                ),
               ),
             ],
           ),
