@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -12,6 +13,7 @@ import 'common/widget/editor_toolbar.dart';
 import 'generated/i18n.dart';
 
 void main() {
+  SystemChrome.setEnabledSystemUIOverlays([]);
   _setTargetPlatformForDesktop();
   runApp(MyApp());
 }
@@ -79,6 +81,7 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.delete),
           ),
           EditorToolItem(
+            enabled: false,
             tooltip: '查找',
             icon: Icon(Icons.search),
           ),
@@ -93,6 +96,7 @@ class _HomePageState extends State<HomePage> {
         ],
         toolsFixed: <EditorToolItem>[
           EditorToolItem(
+            enabled: false,
             tooltip: '图层',
             icon: Icon(Icons.filter),
           ),

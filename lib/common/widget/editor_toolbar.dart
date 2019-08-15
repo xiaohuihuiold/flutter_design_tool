@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_design_tool/common/bloc/screen_bloc.dart';
 import 'package:flutter_design_tool/common/entity/window_info.dart';
+import 'package:flutter_design_tool/generated/i18n.dart';
 import 'package:rxdart/rxdart.dart';
+
+/// 工具栏高度
+const double editorToolbarHeight = kToolbarHeight / 1.2;
 
 /// 编辑器工具栏
 class EditorToolbar extends StatefulWidget {
@@ -33,53 +37,71 @@ class _EditorToolbarState extends State<EditorToolbar> {
   List<Widget> _generateToolList() {
     return List.generate(widget.tools.length, (index) {
       EditorToolItem item = widget.tools[index];
+      // 设置图标
+      Widget icon = StreamBuilder<int>(
+        stream: _hoverFetcher?.stream,
+        builder: (context, snapshot) {
+          Color color;
+          if (_activeIndex == index) {
+            // 被激活时
+            if (item.activeIcon != null) {
+              return item.activeIcon;
+            } else {
+              color = item.activeColor ?? Theme.of(context).buttonColor;
+            }
+          } else {
+            if (snapshot.data == index) {
+              // 鼠标悬浮在上方时
+              if (item.hoverIcon != null) {
+                return item.hoverIcon;
+              } else {
+                color = item.hoverColor ?? Theme.of(context).hoverColor;
+              }
+            } else {
+              // 默认图标样式
+              color = item.color ?? Theme.of(context).highlightColor;
+            }
+          }
+          // 当只设置了颜色时会在原来的icon上着色
+          return IconTheme.merge(
+            child: item.icon,
+            data: IconThemeData(
+              color: color,
+            ),
+          );
+        },
+      );
       return Tooltip(
-        message: item.tooltip,
+        message:
+            '${item.tooltip}${item.enabled == false ? '(${S.of(context).disabled})' : ''}',
         preferBelow: false,
         child: AspectRatio(
           aspectRatio: 1.0,
-          child: MouseRegion(
-            onHover: (_) {
-              _hoverFetcher?.sink?.add(index);
-            },
-            onExit: (_) {
-              _hoverFetcher?.sink?.add(-1);
-            },
-            child: InkWell(
-              borderRadius: BorderRadius.circular(kToolbarHeight / 1.2),
-              onTap: () {
-                setState(() {
-                  _activeIndex = index;
-                });
-                if (item.onPressed != null) {
-                  item.onPressed();
-                }
-              },
-              child: AnimatedSwitcher(
-                reverseDuration: Duration(milliseconds: 1000),
-                duration: Duration(milliseconds: 1000),
-                child: StreamBuilder<int>(
-                  stream: _hoverFetcher?.stream,
-                  builder: (context, snapshot) {
-                    return IconTheme.merge(
-                      data: IconThemeData(color: () {
-                        if (_activeIndex == index) {
-                          return Colors.blue;
-                        } else {
-                          if (snapshot.data == index) {
-                            return Colors.grey.shade900;
-                          } else {
-                            return Colors.grey.shade600;
-                          }
-                        }
-                      }()),
-                      child: item.icon,
-                    );
+          child: item.enabled == false
+              ? IconTheme.merge(
+                  child: item.icon,
+                  data: IconThemeData(color: Theme.of(context).disabledColor),
+                )
+              : MouseRegion(
+                  onHover: (_) {
+                    _hoverFetcher?.sink?.add(index);
                   },
+                  onExit: (_) {
+                    _hoverFetcher?.sink?.add(-1);
+                  },
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(editorToolbarHeight),
+                    onTap: () {
+                      setState(() {
+                        _activeIndex = index;
+                      });
+                      if (item.onPressed != null) {
+                        item.onPressed();
+                      }
+                    },
+                    child: icon,
+                  ),
                 ),
-              ),
-            ),
-          ),
         ),
       );
     });
@@ -89,42 +111,59 @@ class _EditorToolbarState extends State<EditorToolbar> {
   List<Widget> _generateToolFixedList() {
     return List.generate(widget.toolsFixed?.length ?? 0, (index) {
       EditorToolItem item = widget.toolsFixed[index];
+      // 设置图标
+      Widget icon = StreamBuilder<int>(
+        stream: _hoverFixedFetcher?.stream,
+        builder: (context, snapshot) {
+          Color color;
+          if (snapshot.data == index) {
+            // 鼠标悬浮在上方时
+            if (item.hoverIcon != null) {
+              return item.hoverIcon;
+            } else {
+              color = item.hoverColor ?? Theme.of(context).hoverColor;
+            }
+          } else {
+            // 默认图标样式
+            color = item.color ?? Theme.of(context).highlightColor;
+          }
+          // 当只设置了颜色时会在原来的icon上着色
+          return IconTheme.merge(
+            child: item.icon,
+            data: IconThemeData(
+              color: color,
+            ),
+          );
+        },
+      );
       return Tooltip(
-        message: item.tooltip,
+        message:
+            '${item.tooltip}${item.enabled == false ? '(${S.of(context).disabled})' : ''}',
         preferBelow: false,
         child: AspectRatio(
           aspectRatio: 1.0,
-          child: MouseRegion(
-            onHover: (_) {
-              _hoverFixedFetcher?.sink?.add(index);
-            },
-            onExit: (_) {
-              _hoverFixedFetcher?.sink?.add(-1);
-            },
-            child: InkWell(
-              borderRadius: BorderRadius.circular(kToolbarHeight / 1.2),
-              onTap: () {
-                if (item.onPressed != null) {
-                  item.onPressed();
-                }
-              },
-              child: StreamBuilder<int>(
-                stream: _hoverFixedFetcher.stream,
-                builder: (context, snapshot) {
-                  return IconTheme.merge(
-                    data: IconThemeData(color: () {
-                      if (snapshot.data == index) {
-                        return Colors.grey.shade900;
-                      } else {
-                        return Colors.grey.shade600;
+          child: item.enabled == false
+              ? IconTheme.merge(
+                  child: item.icon,
+                  data: IconThemeData(color: Theme.of(context).disabledColor),
+                )
+              : MouseRegion(
+                  onHover: (_) {
+                    _hoverFixedFetcher?.sink?.add(index);
+                  },
+                  onExit: (_) {
+                    _hoverFixedFetcher?.sink?.add(-1);
+                  },
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(editorToolbarHeight),
+                    onTap: () {
+                      if (item.onPressed != null) {
+                        item.onPressed();
                       }
-                    }()),
-                    child: item.icon,
-                  );
-                },
-              ),
-            ),
-          ),
+                    },
+                    child: icon,
+                  ),
+                ),
         ),
       );
     });
@@ -157,46 +196,39 @@ class _EditorToolbarState extends State<EditorToolbar> {
         Widget divider;
         // 工具栏宽高
         Size size;
+        // 滚动工具栏偏移
+        double toolPadding =
+            (widget.toolsFixed?.length ?? 0) * editorToolbarHeight +
+                ((widget.toolsFixed?.length ?? 0) > 0 ? 4 : 0);
 
         if (info.windowDirection == Axis.horizontal) {
           // 当显示是横向时
           alignmentFixed = AlignmentDirectional.bottomCenter;
-          padding = EdgeInsets.only(
-              bottom: (widget.toolsFixed?.length ?? 0) * kToolbarHeight / 1.2 +
-                  ((widget.toolsFixed?.length ?? 0) > 0 ? 4 : 0));
+          padding = EdgeInsets.only(bottom: toolPadding);
           scrollDirection = Axis.vertical;
           divider = Container(
             height: 4.0,
-            width: kToolbarHeight / 1.2 / 1.5,
-            child: Divider(color: Theme
-                .of(context)
-                .dividerColor),
+            width: editorToolbarHeight / 1.5,
+            child: Divider(color: Theme.of(context).dividerColor),
           );
-          size = Size(kToolbarHeight / 1.2, null);
+          size = Size(editorToolbarHeight, null);
         } else {
           // 当显示是纵向时
           alignmentFixed = AlignmentDirectional.centerEnd;
-          padding = EdgeInsets.only(
-              right: (widget.toolsFixed?.length ?? 0) * kToolbarHeight / 1.2 +
-                  ((widget.toolsFixed?.length ?? 0) > 0 ? 4 : 0));
+          padding = EdgeInsets.only(right: toolPadding);
           scrollDirection = Axis.horizontal;
           divider = Container(
             width: 4.0,
-            height: kToolbarHeight / 1.2 / 1.5,
-            child: VerticalDivider(color: Theme
-                .of(context)
-                .dividerColor),
+            height: editorToolbarHeight / 1.5,
+            child: VerticalDivider(color: Theme.of(context).dividerColor),
           );
-          size = Size(null, kToolbarHeight / 1.2);
+          size = Size(null, editorToolbarHeight);
         }
         return Container(
           height: size.height,
           width: size.width,
           decoration: BoxDecoration(
-            color: Theme
-                .of(context)
-                .canvasColor
-                .withOpacity(0.8),
+            color: Theme.of(context).canvasColor.withOpacity(0.8),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.6),
@@ -219,13 +251,13 @@ class _EditorToolbarState extends State<EditorToolbar> {
                   ),
                 ),
               ),
+              // 没有固定tool时隐藏固定tool
               Visibility(
                 visible: widget.toolsFixed != null,
                 child: Flex(
                   direction: scrollDirection,
                   mainAxisSize: MainAxisSize.min,
-                  children: _generateToolFixedList()
-                    ..insert(0, divider),
+                  children: _generateToolFixedList()..insert(0, divider),
                 ),
               ),
             ],
@@ -240,6 +272,9 @@ class _EditorToolbarState extends State<EditorToolbar> {
 class EditorToolItem {
   /// 长按或者鼠标悬浮时的提示
   final String tooltip;
+
+  /// 图标默认颜色
+  final Color color;
 
   /// 鼠标悬浮的图标颜色
   final Color hoverColor;
@@ -264,7 +299,7 @@ class EditorToolItem {
   /// 可与颜色同时使用
   final Widget activeIcon;
 
-  /// 如果点击后有展开选项,或者右键点击时暂时的options
+  /// 如果点击后有展开选项,或者右键点击时展示的options
   final Widget options;
 
   /// 当左键点击,并且不需要展开options时触发
@@ -272,6 +307,7 @@ class EditorToolItem {
 
   EditorToolItem({
     this.tooltip,
+    this.color,
     this.hoverColor,
     this.activeColor,
     this.enabled,

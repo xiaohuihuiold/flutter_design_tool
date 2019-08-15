@@ -22,6 +22,7 @@ class S implements WidgetsLocalizations {
   TextDirection get textDirection => TextDirection.ltr;
 
   String get appName => "FDT";
+  String get disabled => "disabled";
   String get what_is_this => "What is this?";
 }
 
@@ -39,6 +40,8 @@ class $zh_CN extends S {
   String get appName => "FDT";
   @override
   String get what_is_this => "这是啥?";
+  @override
+  String get disabled => "未启用";
 }
 
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {

@@ -1,4 +1,5 @@
 {
   "appName":"FDT",
+  "disabled": "disabled",
   "what_is_this": "What is this?"
 }
