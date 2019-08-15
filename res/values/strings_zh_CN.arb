@@ -1,5 +1,11 @@
 {
   "appName":"FDT",
   "disabled": "未启用",
-  "what_is_this": "这是啥?"
+  "what_is_this": "这是啥?",
+  "user": "用户",
+  "preview": "预览",
+  "share": "分享",
+  "save": "保存",
+  "undo": "撤销",
+  "redo": "重做"
 }

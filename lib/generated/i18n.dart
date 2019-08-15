@@ -23,6 +23,12 @@ class S implements WidgetsLocalizations {
 
   String get appName => "FDT";
   String get disabled => "disabled";
+  String get preview => "Preview";
+  String get redo => "Redo";
+  String get save => "Save";
+  String get share => "Share";
+  String get undo => "Undo";
+  String get user => "User";
   String get what_is_this => "What is this?";
 }
 
@@ -37,11 +43,23 @@ class $zh_CN extends S {
   TextDirection get textDirection => TextDirection.ltr;
 
   @override
+  String get preview => "预览";
+  @override
+  String get undo => "撤销";
+  @override
   String get appName => "FDT";
   @override
   String get what_is_this => "这是啥?";
   @override
+  String get save => "保存";
+  @override
   String get disabled => "未启用";
+  @override
+  String get share => "分享";
+  @override
+  String get redo => "重做";
+  @override
+  String get user => "用户";
 }
 
 class GeneratedLocalizationsDelegate extends LocalizationsDelegate<S> {

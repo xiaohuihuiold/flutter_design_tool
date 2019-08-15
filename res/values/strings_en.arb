@@ -1,5 +1,11 @@
 {
-  "appName":"FDT",
+  "appName": "FDT",
   "disabled": "disabled",
-  "what_is_this": "What is this?"
+  "what_is_this": "What is this?",
+  "user": "User",
+  "preview": "Preview",
+  "share": "Share",
+  "save": "Save",
+  "undo": "Undo",
+  "redo": "Redo"
 }

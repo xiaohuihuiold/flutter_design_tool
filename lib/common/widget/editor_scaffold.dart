@@ -5,8 +5,8 @@ import 'package:flutter_design_tool/common/entity/window_info.dart';
 /// 编辑器脚手架
 /// 实现横竖屏菜单栏,自适应工具栏等
 class EditorScaffold extends StatefulWidget {
-  /// 工具栏在横屏时显示的位置
-  final AlignmentDirectional toolsAlignment;
+  /// 窗口标题栏
+  final PreferredSizeWidget menuBar;
 
   /// 窗口主体内容
   final Widget body;
@@ -16,14 +16,11 @@ class EditorScaffold extends StatefulWidget {
 
   const EditorScaffold({
     Key key,
+    this.menuBar,
     this.body,
     this.toolbar,
-    this.toolsAlignment = AlignmentDirectional.centerStart,
   })  : // 工具栏不为空时必须要有body
         assert((toolbar != null) ? (body != null) : true),
-        // 工具栏位置只能是左或者右
-        assert(toolsAlignment == AlignmentDirectional.centerStart ||
-            toolsAlignment == AlignmentDirectional.centerEnd),
         super(key: key);
 
   @override
@@ -46,8 +43,7 @@ class _EditorScaffoldState extends State<EditorScaffold> {
 
         if (info.windowDirection == Axis.horizontal) {
           // 当显示是横向时
-          // 工具栏位置按照用户设置或者默认
-          alignment = widget.toolsAlignment;
+          alignment = AlignmentDirectional.centerStart;
           if (alignment == AlignmentDirectional.centerStart) {
             offset = EdgeInsets.only(left: kToolbarHeight / 1.2);
           } else if (alignment == AlignmentDirectional.centerEnd) {
@@ -81,6 +77,7 @@ class _EditorScaffoldState extends State<EditorScaffold> {
       realBody = _buildTools();
     }
     return Scaffold(
+      appBar: widget.menuBar,
       body: realBody,
     );
   }

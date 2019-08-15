@@ -8,6 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'common/bloc/screen_bloc.dart';
 import 'common/entity/window_info.dart';
 import 'common/style/themes.dart';
+import 'common/widget/editor_menu_bar.dart';
 import 'common/widget/editor_scaffold.dart';
 import 'common/widget/editor_toolbar.dart';
 import 'generated/i18n.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FDT',
+      debugShowCheckedModeBanner: false,
       theme: Themes.lightTheme,
       // 国际化
       // S.of(context).xxx进行使用
@@ -70,295 +72,68 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return EditorScaffold(
+      menuBar: EditorMenuBar(
+        menus: <EditorMenuItem>[
+          EditorMenuItem(
+            tooltip: S.of(context).save,
+            child: Icon(Icons.save),
+          ),
+          EditorMenuItem(
+            tooltip: S.of(context).undo,
+            child: Icon(Icons.undo),
+          ),
+          EditorMenuItem(
+            tooltip: S.of(context).redo,
+            child: Icon(Icons.redo),
+          ),
+        ],
+        menusFixed: <EditorMenuItem>[
+          EditorMenuItem(
+            tooltip: S.of(context).user,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircleAvatar(
+                child: Icon(Icons.person),
+              ),
+            ),
+          ),
+          EditorMenuItem(
+            tooltip: S.of(context).preview,
+            child: Icon(
+              Icons.play_arrow,
+              color: Colors.green,
+            ),
+          ),
+          EditorMenuItem(
+            tooltip: S.of(context).share,
+            child: Icon(
+              Icons.share,
+              color: Colors.blue,
+            ),
+          ),
+        ],
+      ),
       toolbar: EditorToolbar(
         tools: <EditorToolItem>[
           EditorToolItem(
             tooltip: '添加',
             icon: Icon(Icons.add),
-            options: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ), ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                ],
-              ),
-            ),
           ),
           EditorToolItem(
             tooltip: '删除',
             icon: Icon(Icons.delete),
-            options: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                ],
-              ),
-            ),
           ),
           EditorToolItem(
             tooltip: '查找',
             icon: Icon(Icons.search),
-            options: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                ],
-              ),
-            ),
           ),
           EditorToolItem(
             tooltip: '更新',
             icon: Icon(Icons.update),
-            options: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                ],
-              ),
-            ),
           ),
           EditorToolItem(
             tooltip: '编辑',
             icon: Icon(Icons.edit),
-            options: Container(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                  ListTile(
-                    title: Text('Title'),
-                    subtitle: Text('subtitle'),
-                    trailing: Icon(Icons.more_vert),
-                  ),
-                ],
-              ),
-            ),
           ),
         ],
         toolsFixed: <EditorToolItem>[
@@ -369,6 +144,246 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
+                  ListTile(
+                    title: Text('Title'),
+                    subtitle: Text('subtitle'),
+                    trailing: Icon(Icons.more_vert),
+                  ),
                   ListTile(
                     title: Text('Title'),
                     subtitle: Text('subtitle'),

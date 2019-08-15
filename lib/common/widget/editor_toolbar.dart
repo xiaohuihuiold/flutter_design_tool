@@ -7,6 +7,9 @@ import 'package:rxdart/rxdart.dart';
 /// 工具栏高度
 const double editorToolbarHeight = kToolbarHeight / 1.2;
 
+/// 选项栏高度
+const double editorOptionsWidth = 200.0;
+
 /// 编辑器工具栏
 class EditorToolbar extends StatefulWidget {
   /// 工具栏内容
@@ -32,6 +35,9 @@ class _EditorToolbarState extends State<EditorToolbar> {
 
   /// 选中的item下标
   int _activeIndex = -1;
+
+  /// 展开options
+  Widget _options;
 
   /// 生成tool list
   List<Widget> _generateToolList() {
@@ -73,7 +79,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
       );
       return Tooltip(
         message:
-            '${item.tooltip}${item.enabled == false ? '(${S.of(context).disabled})' : ''}',
+            '${item.tooltip ?? S.of(context).what_is_this}${item.enabled == false ? '(${S.of(context).disabled})' : ''}',
         preferBelow: false,
         child: AspectRatio(
           aspectRatio: 1.0,
@@ -90,7 +96,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
                     _hoverFetcher?.sink?.add(-1);
                   },
                   child: InkWell(
-                    borderRadius: BorderRadius.circular(editorToolbarHeight),
                     onTap: () {
                       setState(() {
                         _activeIndex = index;
@@ -138,7 +143,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
       );
       return Tooltip(
         message:
-            '${item.tooltip}${item.enabled == false ? '(${S.of(context).disabled})' : ''}',
+            '${item.tooltip ?? S.of(context).what_is_this}${item.enabled == false ? '(${S.of(context).disabled})' : ''}',
         preferBelow: false,
         child: AspectRatio(
           aspectRatio: 1.0,
@@ -155,11 +160,19 @@ class _EditorToolbarState extends State<EditorToolbar> {
                     _hoverFixedFetcher?.sink?.add(-1);
                   },
                   child: InkWell(
-                    borderRadius: BorderRadius.circular(editorToolbarHeight),
                     onTap: () {
                       if (item.onPressed != null) {
                         item.onPressed();
                       }
+                      setState(() {
+                        if (_options == item.options) {
+                          // 再次点击则收起
+                          _options = null;
+                        } else {
+                          // 初次点击展开
+                          _options = item.options;
+                        }
+                      });
                     },
                     child: icon,
                   ),
@@ -200,6 +213,15 @@ class _EditorToolbarState extends State<EditorToolbar> {
         double toolPadding =
             (widget.toolsFixed?.length ?? 0) * editorToolbarHeight +
                 ((widget.toolsFixed?.length ?? 0) > 0 ? 4 : 0);
+        // 选项卡偏移
+        double optionPadding;
+
+        if (_options == null) {
+          optionPadding = -editorOptionsWidth;
+        } else {
+          optionPadding =
+              info.windowDirection == Axis.horizontal ? editorToolbarHeight : 0;
+        }
 
         if (info.windowDirection == Axis.horizontal) {
           // 当显示是横向时
@@ -224,82 +246,86 @@ class _EditorToolbarState extends State<EditorToolbar> {
           );
           size = Size(double.infinity, editorToolbarHeight);
         }
-        return Stack(
-          overflow: Overflow.visible,
-          children: <Widget>[
-            AnimatedPositioned(
-              duration: Duration(milliseconds: 200),
-              left: editorToolbarHeight,
-              child: Container(
-                width: 200.0,
-                height: MediaQuery.of(context).size.height,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).canvasColor.withOpacity(0.8),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.6),
-                      blurRadius: 4,
-                    ),
-                  ],
+
+        // 选项卡
+        Widget options = AnimatedPositioned(
+          duration: Duration(milliseconds: 200),
+          left: optionPadding,
+          child: Container(
+            width: 200.0,
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              color: Theme.of(context).canvasColor.withOpacity(0.8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.6),
+                  blurRadius: 4,
                 ),
-                child: Column(
-                  children: <Widget>[
-                    SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          ListTile(
-                            title: Text('Title'),
-                            subtitle: Text('subtitle'),
-                            trailing: Icon(Icons.more_vert),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
+              ],
             ),
-            Container(
-              height: size.height,
-              width: size.width,
-              decoration: BoxDecoration(
-                color: Theme.of(context).canvasColor.withOpacity(0.8),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.6),
-                    blurRadius: 4,
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    child: _options,
                   ),
-                ],
+                )
+              ],
+            ),
+          ),
+        );
+
+        // 工具栏
+        Widget tool = Container(
+          height: size.height,
+          width: size.width,
+          decoration: BoxDecoration(
+            color: Theme.of(context).canvasColor.withOpacity(0.8),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.6),
+                blurRadius: 4,
               ),
-              child: Stack(
-                alignment: alignmentFixed,
-                children: <Widget>[
-                  Positioned.fill(
-                    child: Padding(
-                      padding: padding,
-                      child: SingleChildScrollView(
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: scrollDirection,
-                        child: Flex(
-                          direction: scrollDirection,
-                          mainAxisSize: MainAxisSize.min,
-                          children: _generateToolList(),
-                        ),
-                      ),
-                    ),
-                  ),
-                  // 没有固定tool时隐藏固定tool
-                  Visibility(
-                    visible: widget.toolsFixed != null,
+            ],
+          ),
+          child: Stack(
+            alignment: alignmentFixed,
+            children: <Widget>[
+              Positioned.fill(
+                child: Padding(
+                  padding: padding,
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: scrollDirection,
                     child: Flex(
                       direction: scrollDirection,
                       mainAxisSize: MainAxisSize.min,
-                      children: _generateToolFixedList()..insert(0, divider),
+                      children: _generateToolList(),
                     ),
                   ),
-                ],
+                ),
               ),
+              // 没有固定tool时隐藏固定tool
+              Visibility(
+                visible: widget.toolsFixed != null,
+                child: Flex(
+                  direction: scrollDirection,
+                  mainAxisSize: MainAxisSize.min,
+                  children: _generateToolFixedList()..insert(0, divider),
+                ),
+              ),
+            ],
+          ),
+        );
+
+        return Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: tool,
             ),
+            options,
           ],
         );
       },
