@@ -14,7 +14,7 @@ import 'common/widget/editor_toolbar.dart';
 import 'generated/i18n.dart';
 
 void main() {
-  SystemChrome.setEnabledSystemUIOverlays([]);
+  //SystemChrome.setEnabledSystemUIOverlays([]);
   _setTargetPlatformForDesktop();
   runApp(MyApp());
 }

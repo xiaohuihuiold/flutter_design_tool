@@ -60,35 +60,37 @@ class _EditorMenuBarState extends State<EditorMenuBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: editorMenuBarHeight,
-      decoration: BoxDecoration(
-        color: Theme.of(context).canvasColor.withOpacity(0.8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.6),
-            blurRadius: 4,
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Expanded(
-            child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: _generateItem(widget.menus),
+    return SafeArea(
+      child: Container(
+        height: editorMenuBarHeight,
+        decoration: BoxDecoration(
+          color: Theme.of(context).canvasColor.withOpacity(0.8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.6),
+              blurRadius: 4,
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: _generateItem(widget.menus),
+                ),
               ),
             ),
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: _generateItem(widget.menusFixed),
-          ),
-        ],
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: _generateItem(widget.menusFixed),
+            ),
+          ],
+        ),
       ),
     );
   }
