@@ -224,46 +224,83 @@ class _EditorToolbarState extends State<EditorToolbar> {
           );
           size = Size(double.infinity, editorToolbarHeight);
         }
-        return Container(
-          height: size.height,
-          width: size.width,
-          decoration: BoxDecoration(
-            color: Theme.of(context).canvasColor.withOpacity(0.8),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.6),
-                blurRadius: 4,
+        return Stack(
+          overflow: Overflow.visible,
+          children: <Widget>[
+            AnimatedPositioned(
+              duration: Duration(milliseconds: 200),
+              left: editorToolbarHeight,
+              child: Container(
+                width: 200.0,
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).canvasColor.withOpacity(0.8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.6),
+                      blurRadius: 4,
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: <Widget>[
+                    SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            title: Text('Title'),
+                            subtitle: Text('subtitle'),
+                            trailing: Icon(Icons.more_vert),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ],
-          ),
-          child: Stack(
-            alignment: alignmentFixed,
-            children: <Widget>[
-              Positioned.fill(
-                child: Padding(
-                  padding: padding,
-                  child: SingleChildScrollView(
-                    physics: BouncingScrollPhysics(),
-                    scrollDirection: scrollDirection,
+            ),
+            Container(
+              height: size.height,
+              width: size.width,
+              decoration: BoxDecoration(
+                color: Theme.of(context).canvasColor.withOpacity(0.8),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.6),
+                    blurRadius: 4,
+                  ),
+                ],
+              ),
+              child: Stack(
+                alignment: alignmentFixed,
+                children: <Widget>[
+                  Positioned.fill(
+                    child: Padding(
+                      padding: padding,
+                      child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        scrollDirection: scrollDirection,
+                        child: Flex(
+                          direction: scrollDirection,
+                          mainAxisSize: MainAxisSize.min,
+                          children: _generateToolList(),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // 没有固定tool时隐藏固定tool
+                  Visibility(
+                    visible: widget.toolsFixed != null,
                     child: Flex(
                       direction: scrollDirection,
                       mainAxisSize: MainAxisSize.min,
-                      children: _generateToolList(),
+                      children: _generateToolFixedList()..insert(0, divider),
                     ),
                   ),
-                ),
+                ],
               ),
-              // 没有固定tool时隐藏固定tool
-              Visibility(
-                visible: widget.toolsFixed != null,
-                child: Flex(
-                  direction: scrollDirection,
-                  mainAxisSize: MainAxisSize.min,
-                  children: _generateToolFixedList()..insert(0, divider),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );
