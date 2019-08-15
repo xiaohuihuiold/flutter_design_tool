@@ -41,20 +41,27 @@ class _EditorScaffoldState extends State<EditorScaffold> {
         WindowInfo info = snapshot.data;
         // 工具栏显示位置
         AlignmentGeometry alignment;
+        // body偏移
+        EdgeInsetsGeometry offset;
 
         if (info.windowDirection == Axis.horizontal) {
           // 当显示是横向时
           // 工具栏位置按照用户设置或者默认
           alignment = widget.toolsAlignment;
+          offset = EdgeInsets.only(left: kToolbarHeight / 1.2);
         } else {
           // 当显示是纵向时
           // 工具栏位置设置底部居中
           alignment = AlignmentDirectional.bottomCenter;
+          offset = EdgeInsets.only(bottom: kToolbarHeight / 1.2);
         }
         return Stack(
           alignment: alignment,
           children: <Widget>[
-            widget.body,
+            Container(
+              margin: offset,
+              child: widget.body,
+            ),
             widget.toolbar,
           ],
         );

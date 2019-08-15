@@ -211,7 +211,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
             width: editorToolbarHeight / 1.5,
             child: Divider(color: Theme.of(context).dividerColor),
           );
-          size = Size(editorToolbarHeight, null);
+          size = Size(editorToolbarHeight, double.infinity);
         } else {
           // 当显示是纵向时
           alignmentFixed = AlignmentDirectional.centerEnd;
@@ -222,7 +222,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
             height: editorToolbarHeight / 1.5,
             child: VerticalDivider(color: Theme.of(context).dividerColor),
           );
-          size = Size(null, editorToolbarHeight);
+          size = Size(double.infinity, editorToolbarHeight);
         }
         return Container(
           height: size.height,
@@ -239,15 +239,17 @@ class _EditorToolbarState extends State<EditorToolbar> {
           child: Stack(
             alignment: alignmentFixed,
             children: <Widget>[
-              Padding(
-                padding: padding,
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  scrollDirection: scrollDirection,
-                  child: Flex(
-                    direction: scrollDirection,
-                    mainAxisSize: MainAxisSize.min,
-                    children: _generateToolList(),
+              Positioned.fill(
+                child: Padding(
+                  padding: padding,
+                  child: SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: scrollDirection,
+                    child: Flex(
+                      direction: scrollDirection,
+                      mainAxisSize: MainAxisSize.min,
+                      children: _generateToolList(),
+                    ),
                   ),
                 ),
               ),
@@ -285,9 +287,6 @@ class EditorToolItem {
   /// 是否启用的当前item
   final bool enabled;
 
-  /// 是否点击时就暂时options
-  final bool expanded;
-
   /// 默认图标
   final Widget icon;
 
@@ -311,7 +310,6 @@ class EditorToolItem {
     this.hoverColor,
     this.activeColor,
     this.enabled,
-    this.expanded,
     @required this.icon,
     this.hoverIcon,
     this.activeIcon,
