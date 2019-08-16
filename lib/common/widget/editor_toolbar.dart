@@ -281,7 +281,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
           height: size.height,
           width: size.width,
           decoration: BoxDecoration(
-            color: Theme.of(context).canvasColor.withOpacity(0.8),
+            color: Theme.of(context).canvasColor.withOpacity(1.0),
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.6),
@@ -319,15 +319,25 @@ class _EditorToolbarState extends State<EditorToolbar> {
           ),
         );
 
-        return Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: tool,
-            ),
-            options,
-          ],
-        );
+        return alignmentFixed == AlignmentDirectional.bottomCenter
+            ? Stack(
+                children: <Widget>[
+                  options,
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: tool,
+                  ),
+                ],
+              )
+            : Stack(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: tool,
+                  ),
+                  options,
+                ],
+              );
       },
     );
   }

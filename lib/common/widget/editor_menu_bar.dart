@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_design_tool/generated/i18n.dart';
-import 'package:rxdart/rxdart.dart';
 
 /// menu bar高度
 const double editorMenuBarHeight = kToolbarHeight / 1.2;
@@ -64,7 +63,7 @@ class _EditorMenuBarState extends State<EditorMenuBar> {
       child: Container(
         height: editorMenuBarHeight,
         decoration: BoxDecoration(
-          color: Theme.of(context).canvasColor.withOpacity(0.8),
+          color: Theme.of(context).canvasColor.withOpacity(1.0),
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.6),
