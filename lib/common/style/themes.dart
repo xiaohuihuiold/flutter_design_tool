@@ -7,7 +7,7 @@ class Themes {
     cardColor: Colors.white,
     cursorColor: Colors.grey.shade700,
     accentColor: Colors.blue,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.grey.shade200,
     buttonColor: Colors.blue,
     dialogBackgroundColor: Colors.white,
     disabledColor: Colors.grey.shade400,

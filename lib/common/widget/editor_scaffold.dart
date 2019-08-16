@@ -77,6 +77,7 @@ class _EditorScaffoldState extends State<EditorScaffold> {
       realBody = _buildTools();
     }
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: widget.menuBar,
       body: realBody,
     );

@@ -256,12 +256,12 @@ class _EditorToolbarState extends State<EditorToolbar> {
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
               color: Theme.of(context).canvasColor.withOpacity(0.8),
-              boxShadow: [
+             /* boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.6),
                   blurRadius: 4,
                 ),
-              ],
+              ],*/
             ),
             child: Column(
               children: <Widget>[
@@ -282,12 +282,12 @@ class _EditorToolbarState extends State<EditorToolbar> {
           width: size.width,
           decoration: BoxDecoration(
             color: Theme.of(context).canvasColor.withOpacity(1.0),
-            boxShadow: [
+            /*boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.6),
                 blurRadius: 4,
               ),
-            ],
+            ],*/
           ),
           child: Stack(
             alignment: alignmentFixed,

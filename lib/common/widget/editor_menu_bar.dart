@@ -64,12 +64,12 @@ class _EditorMenuBarState extends State<EditorMenuBar> {
         height: editorMenuBarHeight,
         decoration: BoxDecoration(
           color: Theme.of(context).canvasColor.withOpacity(1.0),
-          boxShadow: [
+         /* boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.6),
               blurRadius: 4,
             ),
-          ],
+          ],*/
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
