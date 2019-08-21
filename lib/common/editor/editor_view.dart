@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_design_tool/common/plugin/cursor_style_plugin.dart';
 
 import 'package:shortcut_keys/shortcut_keys.dart';
 
@@ -72,6 +73,9 @@ class _EditorViewState extends State<EditorView> {
       focusNode: _editorFocus,
       onMouseEnter: _onMouseEnter,
       onMouseExit: _onMouseExit,
+      onMouseHover: (_) {
+        CursorStylePlugin.setStyle();
+      },
       shortcutData: [
         ...test(),
         ShortcutData(

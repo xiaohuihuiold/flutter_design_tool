@@ -16,6 +16,12 @@
     <Filter Include="Source Files\Client Wrapper">
       <UniqueIdentifier>{2761a4b5-57b2-4d50-a677-d20ddc17a7f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\plugin">
+      <UniqueIdentifier>{0c8c6ce9-2c96-45ef-8d6a-96f368e48a1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\plugin">
+      <UniqueIdentifier>{62f4d0e8-f646-4fbb-8cb6-77f57c780814}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(ProjectDir)flutter\cpp_client_wrapper\engine_method_result.cc">
@@ -30,5 +36,16 @@
     <ClCompile Include="flutter_design_tool.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CursorStylePlugin.cpp">
+      <Filter>Source Files\plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="flutter\cpp_client_wrapper\standard_codec.cc">
+      <Filter>Source Files\Client Wrapper</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CursorStylePlugin.h">
+      <Filter>Header Files\plugin</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

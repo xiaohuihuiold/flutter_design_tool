@@ -22,6 +22,7 @@
 // macro needs to be undefined because it prevents calling
 // FlutterWindowController's method.
 #include <windows.h>
+#include "CursorStylePlugin.h"
 #undef CreateWindow
 
 namespace {
@@ -66,6 +67,8 @@ int main(int argc, char **argv) {
                                        assets_path, arguments)) {
     return EXIT_FAILURE;
   }
+
+  CursorStylePluginRegisterWithRegistrar(flutter_controller.GetRegistrarForPlugin("com.xhhold.flutter.tool.design/plugin/cursor_style"));
 
   // Run until the window is closed.
   flutter_controller.RunEventLoop();

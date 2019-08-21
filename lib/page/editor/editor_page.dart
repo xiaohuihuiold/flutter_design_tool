@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_design_tool/common/widget/editor_menu_bar.dart';
 import 'package:flutter_design_tool/common/widget/editor_scaffold.dart';
 import 'package:flutter_design_tool/common/widget/editor_toolbar.dart';
@@ -81,6 +82,7 @@ class _EditorPageState extends State<EditorPage> {
           EditorToolItem(
             tooltip: '图层',
             icon: Icon(Icons.filter),
+            options: TextField(),
           ),
           EditorToolItem(
             tooltip: '更多',

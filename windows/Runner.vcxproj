@@ -150,7 +150,12 @@
     <ClCompile Include="$(ProjectDir)flutter\cpp_client_wrapper\engine_method_result.cc" />
     <ClCompile Include="$(ProjectDir)flutter\cpp_client_wrapper\flutter_window_controller.cc" />
     <ClCompile Include="$(ProjectDir)flutter\cpp_client_wrapper\plugin_registrar.cc" />
+    <ClCompile Include="CursorStylePlugin.cpp" />
+    <ClCompile Include="flutter\cpp_client_wrapper\standard_codec.cc" />
     <ClCompile Include="flutter_design_tool.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CursorStylePlugin.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
