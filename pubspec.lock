@@ -100,6 +100,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.22.1+1"
+  shortcut_keys:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "6cdce5bcd96c65e9d327fc80104743b7589575e1"
+      url: "https://github.com/xiaohuihuiold/shortcut_keys"
+    source: git
+    version: "0.0.1"
   sky_engine:
     dependency: transitive
     description: flutter
