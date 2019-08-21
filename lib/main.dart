@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           }
           return MaterialApp(
             title: 'FDT',
-            debugShowCheckedModeBanner: false,
+            debugShowCheckedModeBanner: true,
             theme: Themes.lightTheme,
             // 国际化
             // S.of(context).xxx进行使用
