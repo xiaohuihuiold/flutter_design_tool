@@ -45,15 +45,15 @@ class _EditorScaffoldState extends State<EditorScaffold> {
           // 当显示是横向时
           alignment = AlignmentDirectional.centerStart;
           if (alignment == AlignmentDirectional.centerStart) {
-            offset = EdgeInsets.only(left: kToolbarHeight / 1.2);
+            offset = const EdgeInsets.only(left: kToolbarHeight / 1.2);
           } else if (alignment == AlignmentDirectional.centerEnd) {
-            offset = EdgeInsets.only(right: kToolbarHeight / 1.2);
+            offset = const EdgeInsets.only(right: kToolbarHeight / 1.2);
           }
         } else {
           // 当显示是纵向时
           // 工具栏位置设置底部居中
           alignment = AlignmentDirectional.bottomCenter;
-          offset = EdgeInsets.only(bottom: kToolbarHeight / 1.2);
+          offset = const EdgeInsets.only(bottom: kToolbarHeight / 1.2);
         }
         return Stack(
           alignment: alignment,

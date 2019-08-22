@@ -64,7 +64,7 @@ class _EditorMenuBarState extends State<EditorMenuBar> {
         height: editorMenuBarHeight,
         decoration: BoxDecoration(
           color: Theme.of(context).canvasColor.withOpacity(1.0),
-         /* boxShadow: [
+          /* boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.6),
               blurRadius: 4,
@@ -76,7 +76,7 @@ class _EditorMenuBarState extends State<EditorMenuBar> {
           children: <Widget>[
             Expanded(
               child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
